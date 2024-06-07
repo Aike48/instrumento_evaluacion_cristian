@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Ejercicio {
 	
+//creación de la lista de los nombres y la lista de su cantidad
 	private ArrayList <String> prodNombre;
 	private ArrayList <String> prodCant;
 	
@@ -13,23 +14,30 @@ public class Ejercicio {
 		prodNombre = new ArrayList<>();
 		prodCant = new ArrayList<>();
 	}
-	
+
+//Creación del método "iniciar" que mostrará el menú y tendrá el ciclo
 	public void iniciar() {
         int opcion;
+        //Ciclo "Do" encargado de la iteración del menú
         do {
             opcion = mostrarMenu();
+            //Switch con las opciones del menú, cada opción llama a su respectivo método
             switch (opcion) {
                 case 1:
                     agregarProducto();
+                    mostrarInventario();
                     break;
                 case 2:
                     buscarProdNombre();
+                    mostrarInventario();
                     break;
                 case 3:
                 	actuCantProd();
+                	mostrarInventario();
                     break;
                 case 4:
                     eliminarProd();
+                    mostrarInventario();
                     break;
                 case 5:
                     mostrarInventario();
@@ -40,15 +48,18 @@ public class Ejercicio {
                     break;
                     
                 default:
+                	//Default por si ingresan un número que no esta en el menú
                     JOptionPane.showMessageDialog(null, "Opción no válida, por favor ingrese nuevamente.");
                     break;
             }
+            //condición que rompe el ciclo cuando el usuario ingresa la opción "0"
         } while (opcion != 0);
     }
-	
+
+//Método que muestra el menú
 	private int mostrarMenu() {
         String menu = "===== Menú =====\n"
-                + "Ingrese una opción: "
+                + "Ingrese una opción: \n "
                 + "1. Agregar productos\n"
                 + "2. Buscar producto por nombre\n"
                 + "3. Actualizar cantidad de producto\n"
@@ -57,9 +68,11 @@ public class Ejercicio {
                 + "0. Salir\n";
 ;
         String opcionStr = JOptionPane.showInputDialog(menu);
+        //Después de ingresar una opción se llama el métod encargado de validar que sea una entrada numérica
         return validarEntradaNumerica(opcionStr) ? Integer.parseInt(opcionStr) : -1;
     }
 
+//Método que verifica que se ingrese un numero en el menú, de lo contrario le manda un mensaje de error
     private boolean validarEntradaNumerica(String entrada) {
         try {
             Integer.parseInt(entrada);
@@ -70,6 +83,7 @@ public class Ejercicio {
         }
     }
     
+//Método que agrega un producto nuevo
     private void agregarProducto () {
     	String cantProd = JOptionPane.showInputDialog("Ingrese la cantidad de productos a registrar:");
         if (!validarEntradaNumerica(cantProd)) {
@@ -81,7 +95,7 @@ public class Ejercicio {
             String nombreProd = JOptionPane.showInputDialog("Ingrese el nombre del producto " + (i + 1) + ":");
             if (prodNombre.contains(nombreProd)) {
                 JOptionPane.showMessageDialog(null, "El producto ya está registrado.");
-                i--; // Para que se vuelva a pedir el nombre del profesor
+                i--; // Para que se vuelva a pedir el nombre del producto
             } else {
             	String cantidaProd = JOptionPane.showInputDialog("Ingrese la cantidad del producto " + nombreProd + ":");
                 prodNombre.add(nombreProd);
@@ -94,6 +108,7 @@ public class Ejercicio {
     }
    
     
+  //Método que busca un producto por su nombre
     private void buscarProdNombre () {
     	if (prodNombre.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay productos registrados.");
@@ -111,6 +126,7 @@ public class Ejercicio {
         }
     }
     
+  //Método que actualiza un producto y su precio
     private void actuCantProd () {
     	if (prodNombre.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay productos registrados.");
@@ -129,6 +145,8 @@ public class Ejercicio {
         }
         JOptionPane.showMessageDialog(null, "Cantidad de producto actualizada exitosamente.");
     }
+    
+  //Método que elimina un producto
 
     private void eliminarProd () {
     	
@@ -149,6 +167,8 @@ public class Ejercicio {
         }
     }
 
+  //Método que muestra el inventario con todos los productos y sus respectivos precios
+    
     private void mostrarInventario () {
     	if (prodNombre.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay productos registrados.");
@@ -164,6 +184,7 @@ public class Ejercicio {
         JOptionPane.showMessageDialog(null, resultado);
     }
 
+  //Método que permite la ejecución del programa llamando el método iniciar
 	public static void main(String[] args) {
 		Ejercicio programa = new Ejercicio();
         programa.iniciar();
